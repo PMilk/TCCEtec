@@ -101,7 +101,7 @@ create database db_pgra;
 			primary key(cd_tipo));
 
 
-	create table tb_contato
+	create table tb_contato(
 		cd_contato int not null,
 		cd_telefone char(11) not null,
 		cd_tipo int not null,
@@ -154,13 +154,16 @@ create database db_pgra;
 			primary key(cd_logradouro),
 		constraint fk_logradouro_cliente
 			foreign key(cd_cliente)
-				references tb_cliente(cd_cliente));
+				references tb_cliente(cd_cliente),
+		constraint fk_logradouro_bairro
+			foreign key(cd_bairro)
+				references tb_bairro(cd_bairro));
 
 --------------- FIM AREA CLIENTE ----------------------------
 
 --------------- AREA PEDIDO --------------------------------
 	
-		create table tb_status
+		create table tb_status(
 			cd_status int not null,
 			nm_status varchar(45),
 			constraint pk_status
@@ -174,6 +177,7 @@ create database db_pgra;
 			vl_desconto decimal(9,2) not null,
 			ds_obs varchar(255),
 			ic_entregue char(1) not null,
+			cd_status int not null,
 			cd_funcionario int not null,
 			cd_entregador int,
 			cd_cliente int not null,
@@ -187,4 +191,55 @@ create database db_pgra;
 					references tb_usuario(cd_usuario),
 			constraint fk_pedido_cliente
 				foreign key(cd_cliente)
-					references tb_cliente(cd_cliente));
+					references tb_cliente(cd_cliente),
+			constraint fk_pedido_status
+				foreign key(cd_status)
+					references tb_status(cd_status));
+
+		create table tipo_pagamento(
+			cd_tipo int not null,
+			nm_tipo varchar(45) not null,
+			constraint pk_tipo_pagamento
+				primary key(cd_tipo));
+
+		create table tb_pagamento(
+			cd_pagamento int not null,
+			vl_entrada int,
+			dt_pagamento datetime not null,
+			cd_tipo_pagamento int not null,
+			cd_pedido int not null,
+			constraint pk_pagamento
+				primary key(cd_pagamento),
+			constraint fk_pagamento_tipo
+				foreign key(cd_tipo_pagamento)
+					references tipo_pagamento(cd_tipo),
+			constraint fk_pagamento_pedido
+				foreign key(cd_pedido)
+					references tb_pedido(cd_pedido));
+
+		create table tb_parcela(
+			cd_parcela int not null,
+			dt_vencimento date not null,
+			dt_pagamento datetime,
+			vl_parcela decimal(9,2) not null,
+			ic_status char(1) not null,
+			cd_pagamento int not null,
+			constraint pk_parcela
+				primary key(cd_parcela),
+			constraint fk_parcela_pagamento
+				foreign key(cd_pagamento)
+					references tb_pagamento(cd_pagamento));
+
+		create table item_pedido(
+			cd_item_pedido int not null,
+			cd_pedido int not null,
+			cd_produto int not null,
+			qt_produto int not null,
+			constraint pk_item_pedido
+				primary key(cd_item_pedido),
+			constraint fk_item_pedido
+				foreign key(cd_pedido)
+					references tb_pedido(cd_pedido),
+			constraint fk_item_produto
+				foreign key(cd_produto)
+					references tb_produto(cd_produto));
