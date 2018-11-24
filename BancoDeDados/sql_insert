@@ -1,0 +1,14 @@
+----------------- INSERT DE CLIENTES -----------------
+use db_pgra;
+
+	insert into 
+		tb_cliente(
+			cd_cliente,nm_cliente
+			,dt_cadastro
+			) VALUES
+			(1,'PAULO LEITE COSTA',current_date),
+			(select (max(cd_cliente)+1) from tb_cliente,'ERMESOM MATHEUS DINIZ',current_date),
+			(select (max(cd_cliente)+1) from tb_cliente,'VINICIUS DE MORAES FILHO',current_date),
+			(select (max(cd_cliente)+1) from tb_cliente,'LETICIA FERREIRA SANTANA',current_date),
+			(select (max(cd_cliente)+1) from tb_cliente,'VICTOR DOS SANTOS',current_date);
+
