@@ -73,7 +73,6 @@ create database db_pgra;
 	create table tb_cliente(
 		cd_cliente int not null,
 		nm_cliente varchar(100),
-		nm_razao_social varchar(100),
 		dt_cadastro date not null,
 		constraint pk_cliente
 			primary key(cd_cliente));
@@ -169,6 +168,12 @@ create database db_pgra;
 			constraint pk_status
 				primary key(cd_status));
 
+		create table topo_entrada(
+			cd_tipo int not null,
+    		nm_tipo varchar(30) not null,
+    		constraint pk_tipo_entrada
+				primary key(cd_tipo));
+
 		create table tb_pedido(
 			cd_pedido int not null,
 			dt_pedido date not null,
@@ -176,8 +181,9 @@ create database db_pgra;
 			vl_subtotal decimal(9,2) not null,
 			vl_desconto decimal(9,2) not null,
 			ds_obs varchar(255),
-			ic_entregue char(1) not null,
+			cd_entrega char(1) not null,
 			cd_status int not null,
+			cd_endereco int,
 			cd_funcionario int not null,
 			cd_entregador int,
 			cd_cliente int not null,
@@ -194,7 +200,10 @@ create database db_pgra;
 					references tb_cliente(cd_cliente),
 			constraint fk_pedido_status
 				foreign key(cd_status)
-					references tb_status(cd_status));
+					references tb_status(cd_status),
+			constraint fk_pedido_tipo_entrada
+				foreign key(cd_entrega)
+					references tipo_entrada(cd_tipo));
 
 		create table tipo_pagamento(
 			cd_tipo int not null,

@@ -1,15 +1,17 @@
 --Select para selecionar os telefones com o nome e o tipo de contato, somente para os clientes pf
 select c.nm_cliente,t.nm_tipo,co.cd_telefone from tb_cliente as c left join tb_contato as co on c.cd_cliente = co.cd_cliente join tipo_contato as t on t.cd_tipo = co.cd_tipo right join tipo_cliente_pf as pf on pf.cd_cliente = c.cd_cliente; 
-
+	
 --Select para selecionar os telefones com o nome e o tipo de contato, somente para os clientes pj
-select c.nm_razao_social,t.nm_tipo,co.cd_telefone from tb_cliente as c left join tb_contato as co on c.cd_cliente = co.cd_cliente join tipo_contato as t on t.cd_tipo = co.cd_tipo right join tipo_cliente_pj as pj on pj.cd_cliente = c.cd_cliente; 
+select c.nm_cliente,t.nm_tipo,co.cd_telefone from tb_cliente as c left join tb_contato as co on c.cd_cliente = co.cd_cliente join tipo_contato as t on t.cd_tipo = co.cd_tipo right join tipo_cliente_pj as pj on pj.cd_cliente = c.cd_cliente; 
 
 --Select para selecionar os endereços e nome dos cliente pf
 select c.nm_cliente as Nome,uf.nm_uf as UF,cd.nm_cidade as Cidade, l.cd_cep as CEP,b.nm_bairro as Bairro,l.ds_logradouro as Logradouro,l.cd_numero  as Numero,l.ds_complemento as Complemento from tb_cliente as c left join tb_logradouro as l on l.cd_cliente = c.cd_cliente left join tb_bairro as b on b.cd_bairro = l.cd_bairro left join tb_cidade as cd on cd.cd_cidade = b.cd_cidade left join tb_uf as uf on uf.cd_uf = cd.cd_uf right join tipo_cliente_pf as pf on pf.cd_cliente = c.cd_cliente;
 
 --Select para selecionar os endereços e nome dos cliente pj
-select c.nm_razao_social as Nome,uf.nm_uf as Esta,cd.nm_cidade as Cidade, l.cd_cep as CEP,b.nm_bairro as Bairro,l.ds_logradouro as Logradouro,l.cd_numero  as Numero,l.ds_complemento as Complemento from tb_cliente as c left join tb_logradouro as l on l.cd_cliente = c.cd_cliente left join tb_bairro as b on b.cd_bairro = l.cd_bairro left join tb_cidade as cd on cd.cd_cidade = b.cd_cidade left join tb_uf as uf on uf.cd_uf = cd.cd_uf right join tipo_cliente_pj as pj on pj.cd_cliente = c.cd_cliente;
+select c.nm_cliente as Nome,uf.nm_uf as Esta,cd.nm_cidade as Cidade, l.cd_cep as CEP,b.nm_bairro as Bairro,l.ds_logradouro as Logradouro,l.cd_numero  as Numero,l.ds_complemento as Complemento from tb_cliente as c left join tb_logradouro as l on l.cd_cliente = c.cd_cliente left join tb_bairro as b on b.cd_bairro = l.cd_bairro left join tb_cidade as cd on cd.cd_cidade = b.cd_cidade left join tb_uf as uf on uf.cd_uf = cd.cd_uf right join tipo_cliente_pj as pj on pj.cd_cliente = c.cd_cliente;
 
+--select para ver o endereço de todos os clientes ----
+select c.nm_cliente as Nome,uf.nm_uf as Esta,cd.nm_cidade as Cidade, l.cd_cep as CEP,b.nm_bairro as Bairro,l.ds_logradouro as Logradouro,l.cd_numero  as Numero,l.ds_complemento as Complemento from tb_cliente as c left join tb_logradouro as l on l.cd_cliente = c.cd_cliente left join tb_bairro as b on b.cd_bairro = l.cd_bairro left join tb_cidade as cd on cd.cd_cidade = b.cd_cidade left join tb_uf as uf on uf.cd_uf = cd.cd_uf;
 --select para selecionar os produtos com seus fornecedores e suas marcas
 select CONCAT(pd.ds_produto,', ',pd.qt_litros,'L') as Produto ,m.nm_marca,f.nm_fornecedor from tb_produto as pd left join tb_marca as m on pd.cd_marca = m.cd_marca left join tb_fornecedor as f on f.cd_fornecedor = pd.cd_fornecedor;
 
