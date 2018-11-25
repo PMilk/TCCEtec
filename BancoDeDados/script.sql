@@ -46,7 +46,7 @@ create database db_pgra;
 
 	create table tb_usuario(
 		cd_usuario int not null,
-		nm_usuario int not null,
+		nm_usuario varchar(100) not null,
 		log_acesso datetime,
 		cd_funcao int not null,
 		constraint pk_usuario

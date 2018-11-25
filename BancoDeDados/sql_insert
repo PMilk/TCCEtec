@@ -7,8 +7,117 @@ use db_pgra;
 			,dt_cadastro
 			) VALUES
 			(1,'PAULO LEITE COSTA',current_date),
-			(select (max(cd_cliente)+1) from tb_cliente,'ERMESOM MATHEUS DINIZ',current_date),
-			(select (max(cd_cliente)+1) from tb_cliente,'VINICIUS DE MORAES FILHO',current_date),
-			(select (max(cd_cliente)+1) from tb_cliente,'LETICIA FERREIRA SANTANA',current_date),
-			(select (max(cd_cliente)+1) from tb_cliente,'VICTOR DOS SANTOS',current_date);
+			(2,'ERMESOM MATHEUS DINIZ',current_date),
+			(3,'VINICIUS DE MORAES FILHO',current_date),
+			(4,'LETICIA FERREIRA SANTANA',current_date),
+			(5,'VICTOR DOS SANTOS',current_date);
+            
+	
+	insert into 
+		tipo_cliente_pf
+		VALUES
+		(1,"50408464879","56713233x"),
+		(2,null,null),
+		(3,null,null),
+		(4,null,null),
+		(5,null,null);
 
+
+
+		insert into 
+		tb_cliente(
+			cd_cliente,nm_razao_social
+			,dt_cadastro
+			) 
+		select max(cd_cliente)+1,'HOSPITAL IRMA DULCE',current_date, from tb_cliente,
+		select max(cd_cliente)+1,'CONSTRUMOURA',current_date, from tb_cliente,
+		select max(cd_cliente)+1,'RENNER',current_date, from tb_cliente,
+		select max(cd_cliente)+1,'AMERICANAS',current_date, from tb_cliente,
+		select max(cd_cliente)+1,'PGTEL',current_date, from tb_cliente
+
+
+
+
+
+---------------------------------------------------------------------------------------------------------
+
+----------------- INSERT DE CLIENTES -----------------
+use db_pgra;
+
+	insert into 
+		tb_cliente(
+			cd_cliente,nm_cliente
+			,dt_cadastro
+			) VALUES
+			(1,'PAULO LEITE COSTA',current_date),
+			(2,'ERMESOM MATHEUS DINIZ',current_date),
+			(3,'VINICIUS DE MORAES FILHO',current_date),
+			(4,'LETICIA FERREIRA SANTANA',current_date),
+			(5,'VICTOR DOS SANTOS',current_date);
+            
+	
+
+insert into 
+		tipo_cliente_pf
+		VALUES
+		(1,"50408464879","56713233x"),
+		(2,null,null),
+		(3,null,null),
+		(4,null,null),
+		(5,null,null);
+		
+        
+        SELECT * FROM TB_CLIENTE;
+        
+		insert into 
+		tb_cliente(
+			cd_cliente,nm_razao_social
+			,dt_cadastro
+			)
+		select max(cd_cliente)+1,'HOSPITAL IRMA DULCE',current_date from tb_cliente;
+        
+		insert into 
+		tb_cliente(
+			cd_cliente,nm_razao_social
+			,dt_cadastro
+			) 
+		select max(cd_cliente)+1,'CONSTRUMOURA',current_date from tb_cliente;
+        
+        
+		insert into 
+		tb_cliente(
+			cd_cliente,nm_razao_social
+			,dt_cadastro
+			) 
+		select max(cd_cliente)+1,'RENNER',current_date from tb_cliente;
+        
+        
+        
+        
+		insert into 
+		tb_cliente(
+			cd_cliente,nm_razao_social
+			,dt_cadastro
+			) 
+		select max(cd_cliente)+1,'AMERICANAS',current_date from tb_cliente;
+        
+        
+        
+		insert into 
+		tb_cliente(
+			cd_cliente,nm_razao_social
+			,dt_cadastro
+			)
+		select max(cd_cliente)+1,'PGTEL',current_date from tb_cliente;
+        
+        SELECT * FROM TB_CLIENTE;
+        
+        insert into 
+        tipo_cliente_pj
+        values
+		(6,'49049448000199','123456789102'),
+        (7,'49049412345699','123123123123'),
+        (8,'','767676768767'),
+        (9,'','213123123132'),
+        (10,'','');
+        
