@@ -1,0 +1,19 @@
+{
+	"name":"miniframework",
+	"require": {
+		"php": ">= 7.0"
+	},
+	"authores":[
+		{
+			"name": "Paulo Leite",
+			"email": "pauloleite@emial.com"
+		}
+	],
+	"autoload": {
+		"psr-4": {
+			"App\\":"App/",
+			"MF\\": "vendor/MF/"
+		}
+	}
+
+}
