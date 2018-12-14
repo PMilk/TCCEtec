@@ -73,9 +73,7 @@ body {
 /*
  * Navbar
  */
-#nav-menu {
-  height: -webkit-fill-available;
-}
+
 .navbar-brand {
   padding-top: .75rem;
   padding-bottom: .75rem;
@@ -99,4 +97,30 @@ body {
 .form-control-dark:focus {
   border-color: transparent;
   box-shadow: 0 0 0 3px rgba(255, 255, 255, .25);
+}
+
+@media only screen and (max-width: 575px) {
+    main {
+      margin-top: 30px;
+    }
+      #menus {
+      top: 35px;
+    }
+    #botoes #cadastrar {
+      margin-top: 20px;
+    }
+    
+}
+
+@media only screen and(max-width: 765px) {
+
+    #hotmenu {
+      display: block;
+    }
+}
+
+
+.menu-reponsivo{
+      top: 86px;
+      padding-top: 0px;
 }

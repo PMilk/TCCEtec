@@ -7,7 +7,7 @@ class Connection {
 	public function getDb() {
 		try {
 			$conn = new \PDO(
-				"mysql:host=127.0.0.1;dbname=db_mvc;charset=utf8",
+				"mysql:host=127.0.0.1;dbname=db_pgra;charset=utf8",
 				"root",
 				""
 			);
