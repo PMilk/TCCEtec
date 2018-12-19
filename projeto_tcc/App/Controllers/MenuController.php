@@ -33,12 +33,18 @@ class MenuController extends Action {
     	
     }
 
+    public function selecionarCliente() {
+        $this->render('selecionarCliente','layout2');
+    }
+
     public function pedido() {
         $this->pedido = Container::getModel('pedido');
         session_start();
         
         $this->view->vendedor = $_SESSION['nome'];
-
+        if (empty($this->cliente)) {
+            header('location: /menu/selecionar');
+        }
         $this->view->cliente = $this->cliente->getClientePorId();
         $this->pedido->getCod();
         $this->view->pedido = $this->pedido->__get('id_pedido');
@@ -139,6 +145,16 @@ class MenuController extends Action {
         }
     }
 
+    public function pesquisarClientes() {
+        $this->cliente = Container::getModel('cliente');
+        print_r($_GET);
+        echo "<br>";
+            $this->cliente->__set('nome',$_GET['pesq']);
+            $this->view->clientes = $this->cliente->pesquisarClientes($_GET['tipo_pesq']);
+            echo "<pre>";
+            print_r($this->view->clientes);
+            echo "</pre>";
+        }
 }
 
 ?>

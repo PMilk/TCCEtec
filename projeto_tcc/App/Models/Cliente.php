@@ -72,5 +72,26 @@ class Cliente extends Model {
 		$stmt->execute();
 		return $stmt->fetch(\PDO::FETCH_ASSOC);
 	}
+	public function pesquisarClientes($tipo) {
+		
+		if($tipo == 0) {
+			//nome
+			$query = "select '1' as tipo,c.nm_cliente as nome, c.dt_cadastro as data, pf.cd_cpf as cod,pf.cd_rg as cod2,c.cd_cliente as id_cliente from tipo_cliente_pf as pf left join tb_cliente as c on c.cd_cliente = pf.cd_cliente where c.nm_cliente like :nome_pesq UNION select '2' as tipo,c.nm_cliente, c.dt_cadastro, pj.cd_cnpj,pj.cd_insc_estadual,c.cd_cliente from tipo_cliente_pj as pj left join tb_cliente as c on c.cd_cliente = pj.cd_cliente where c.nm_cliente like :nome_pesq";
+			$stmt = $this->db->prepare($query);
+			$stmt->bindValue(':nome_pesq',$this->__get('nome')."%");
+		} else if($tipo == 1) {	
+			//telefone
+		} else if($tipo == 2) {
+			//cpf
+		} else if($tipo == 3) {
+			//rg
+		} else if($tipo == 4) {
+			//cnpj
+		} else if($tipo == 5) {
+			//insc
+		}
+		$stmt->execute();
+		return $stmt->fetchAll(\PDO::FETCH_ASSOC);
+	}
 }
 ?>

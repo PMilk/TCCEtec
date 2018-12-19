@@ -1,3 +1,4 @@
+use db_pgra;
 
 insert into 
 		tb_cliente(
@@ -62,12 +63,13 @@ insert into tb_logradouro
         (2,'11704100',3,'Rua Colombia','casa',250,2),
         (3,'11703680',1,'Rua Jarus','casa',75,3),
         (4,'11704123',2,'Rua Guimarães Rosa','casa',818,4),
-        (5,'11704100',2,'Av. Presidente Kennedy','loja de celulares',7175,5),
+        (5,'11704100',2,'Av. Presidente Kennedy','apartamento',7175,5),
         (6,'11809990',4,'Rua dos Aviões','loja',7123,6),
         (7,'11123132',5,'Rua Hermes','loja',1234,7),
         (8,'11709773',6,'Rua jau','loja',7321,8),
-        (9,'117041543',7,'Rua 26 de janeiro','loja',9821,9),
-        (10,'11704100',2,'Av. Presidente Kennedy','loja de celulares',7175,10);
+        (9,'11704154',7,'Rua 26 de janeiro','loja',9821,9),
+        (10,'11704100',2,'Av. Presidente Kennedy','loja de celulares',7175,10),
+        (11,'11703100',1,'Rua Guimarães Rosa','casa',841,1);
         
  insert into 
 		tipo_contato
@@ -113,11 +115,11 @@ insert into tb_produto
         (3,'GALÃO DE AGUA',10,12.00,18.00,20.00,'2025-12-01',1,2),
         (4,'GALÃO DE AGUA',25,15.00,24.00,27.00,'2020-12-01',2,1);
         
-insert into tb_status
+insert into status_pedido
         values
-        (1,'PAGO'),
-        (2,'PENDENTE'),
-        (3,'NÃO PAGO'),
+        (1,'NÃO PAGO'),
+        (2,'PAGO'),
+        (3,'PENDENTE'),
         (4,'ISENTO');
         
         insert into tb_funcao
@@ -147,10 +149,11 @@ insert into tb_status
         
 insert into tb_pedido
 values
-(1,current_date(),current_time(),20,0,null,1,3,1,2,3,1),
-(2,current_date(),current_time(),42,0,null,1,3,4,2,3,4),
-(3,current_date(),current_time(),72,0,null,1,3,7,2,3,7),
-(4,current_date(),current_time(),48,0,null,1,3,10,2,3,10);
+(1,current_date(),current_time(),20,0,null,2,2,1,2,3,1),
+(2,current_date(),current_time(),42,0,null,2,2,4,2,3,4),
+(3,current_date(),current_time(),72,0,null,2,2,7,2,3,7),
+(4,current_date(),current_time(),48,0,null,1,3,10,2,3,10),
+(5,current_date(),current_time(),40,0,null,1,1,1,2,3,1);
 
 
 insert into item_pedido
@@ -158,7 +161,8 @@ values
 (1,1,1,1),
 (2,2,2,2),
 (3,3,3,4),
-(4,4,4,2);
+(4,4,4,2),
+(5,5,1,2);
 
 
 insert into tipo_pagamento
@@ -166,15 +170,14 @@ insert into tipo_pagamento
     (1,'DINHEIRO'),
     (2,'CARTÃO DE CRÉDITO'),
     (3,'CARTÃO DE DÉBITO'),
-    (4,'CHEQUE'),
-    (5,'BOLETO');
+    (4,'CARNÊ');
     
 insert into tb_pagamento
 values
 (1,20,current_timestamp(),1,1),
 (2,43,current_timestamp(),3,2),
 (3,72,current_timestamp(),2,3),
-(4,48,current_timestamp(),5,4);
+(4,48,current_timestamp(),4,4);
 
 
 insert into tb_parcela

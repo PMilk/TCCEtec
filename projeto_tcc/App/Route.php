@@ -43,7 +43,16 @@ class Route  extends Bootstrap {
 			'controller' => 'AuthController',
 			'action' => 'sair'
 		);
-		
+		$routes['selecionar'] = array (
+			'route' => '/menu/selecionar',
+			'controller' => 'MenuController',
+			'action' => 'selecionarCliente'
+		);
+		$routes['pesquisar'] = array (
+			'route' => '/menu/pesquisar',
+			'controller' => 'MenuController',
+			'action' => 'pesquisarClientes'
+		);
 		
 		$this->setRoutes($routes);
 	}

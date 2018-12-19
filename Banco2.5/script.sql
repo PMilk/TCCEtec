@@ -4,7 +4,7 @@ create database db_pgra;
  ----------------------- AREA DE PRODUTOS ----------------------------
 	create table tb_marca(
 		cd_marca int not null,
-		nm_marca varchar(45),
+		nm_marca varchar(45) not null,
 		constraint pk_marca
 			primary key(cd_marca));
 
@@ -57,9 +57,9 @@ create database db_pgra;
 
 	create table tb_login(
 		cd_login int not null,
-		ds_acesso varchar(255),
-		ds_senha varchar(255),
-		ic_nivel char(1),
+		ds_acesso varchar(255) not null,
+		ds_senha varchar(255) not null,
+		ic_nivel char(1) not null,
 		cd_usuario int not null,
 		constraint pk_login
 			primary key(cd_login),
@@ -72,7 +72,7 @@ create database db_pgra;
 
 	create table tb_cliente(
 		cd_cliente int not null,
-		nm_cliente varchar(100),
+		nm_cliente varchar(100) not null,
 		dt_cadastro date not null,
 		constraint pk_cliente
 			primary key(cd_cliente));
@@ -162,9 +162,9 @@ create database db_pgra;
 
 --------------- AREA PEDIDO --------------------------------
 	
-		create table tb_status(
+		create table status_pedido(
 			cd_status int not null,
-			nm_status varchar(45),
+			nm_status varchar(45) not null,
 			constraint pk_status
 				primary key(cd_status));
 
@@ -181,8 +181,8 @@ create database db_pgra;
 			vl_subtotal decimal(9,2) not null,
 			vl_desconto decimal(9,2) not null,
 			ds_obs varchar(255),
-			cd_entrega int not null,
-			cd_status int not null,
+			cd_entrega int not null default 1,
+			cd_status int not null default 1,
 			cd_endereco int,
 			cd_funcionario int not null,
 			cd_entregador int,
@@ -200,7 +200,7 @@ create database db_pgra;
 					references tb_cliente(cd_cliente),
 			constraint fk_pedido_status
 				foreign key(cd_status)
-					references tb_status(cd_status),
+					references status_pedido(cd_status),
 			constraint fk_pedido_status_entrega
 				foreign key(cd_entrega)
 					references status_entrega(cd_tipo));
