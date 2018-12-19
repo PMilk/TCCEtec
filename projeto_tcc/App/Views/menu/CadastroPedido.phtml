@@ -1,0 +1,240 @@
+<?php 
+	if(isset($_GET['erro'])) {
+	if($_GET['erro'] == 'nome') {?>
+<div class="alert alert-danger" role="alert">
+  Erro no cadastro, verifique todos os campos preenchidos!
+</div>
+<?php }	} ?>
+<?php 
+	if(isset($_GET['cad'])) {
+	if($_GET['cad'] == 'ok') {?>
+<div class="alert alert-success" role="alert">
+  Cadastro efetuado com sucesso!
+</div>
+<?php }	} ?>
+
+<form method="post" action="/menu/cadastrar?acao=pedido" id="form-cad">
+<div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
+	<h1 class="h2">Cadastro de Pedido</h1>
+</div>
+<div class="row">	
+	<div class="col-sm-3">	
+		<div class="form-group">
+				<label for="pesq">Código do pedido:</label>	
+				<h4 class="form-control text-danger"><?php print_r($this->view->pedido); ?></h4>
+		</div>
+	</div>
+	<div class="col-sm-3">	
+		<div class="form-group">
+				<label for="pesq">Data:</label>	
+				<h4 class="form-control"><?= date('d/m/Y') ?></h4>
+		</div>
+	</div>
+	<div class="col-sm-3">	
+		<div class="form-group">
+				<label for="pesq">Hora:</label>	
+				<h4 class="form-control"><?= date('H:m:s') ?></h4>
+		</div>
+	</div>
+
+	<div class="col-sm-3">	
+		<div class="form-group">
+				<label for="pesq">Vendedor:</label>	
+				<h4 class="form-control"><?= $this->view->vendedor ?></h4>
+		</div>
+	</div>
+
+</div>
+<hr>
+<h2 class="text-center">Dados do Cliente:</h2>
+	<hr>	
+<div class="containner">	
+		<div class="row mx-auto">	
+		<div class="for-group col-sm-4">
+			<label>Nome/Razão:</label>
+			<h4 class="form-control"><?= $this->view->cliente['nome'] ?></h4>
+		</div>
+		<div class="for-group col-sm-4">
+			<label>CPF/CNPJ:</label>
+			<h4 class="form-control"><?= $this->view->cliente['cod1'] ?></h4>
+		</div>
+		<div class="for-group col-sm-4">
+			<label>RG/INSCRIÇÃO ESTADUAL:</label>
+			<h4 class="form-control"><?= $this->view->cliente['cod2'] ?></h4>
+		</div>
+
+</div>
+<hr>
+<div id="pedidos" class="mx-auto" style="max-width: 600px;">
+	<h3 class="text-center">Itens do último pedido:</h3>
+	<hr>
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Descrição do Produto</th>
+      <th scope="col">Validade</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>GALÃO DE ÁGUA CRISTAL,20L</td>
+      <td>02/2018</td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>GALÃO DE ÁGUA CRISTAL,20L</td>
+      <td>02/2018</td>
+    </tr><tr>
+      <th scope="row">1</th>
+      <td>GALÃO DE ÁGUA CRISTAL,20L</td>
+      <td>02/2018</td>
+    </tr>
+    
+  </tbody>
+</table>
+</div>
+<hr>
+<div>
+<h3 class="text-center">Dados do Pedido:</h3>
+<hr>
+<div class="row">
+	<div class="col-sm-6">
+		<label>Endereço de entrega:</label>
+		<div class="input-group">
+  <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+    <option selected>Rua Apinajés,54,Tupi,Praia Grande-SP</option>
+    <option value="1">One</option>
+    <option value="2">Two</option>
+    <option value="3">Three</option>
+  </select>
+  <div class="input-group-append">
+    <button class="btn btn-outline-secondary" type="button">Novo Endereço</button>
+  </div>
+</div>
+		
+	</div>	
+</div>
+</div>
+<hr>
+
+<div id="carrinho">
+	<h3 class="text-center">Carrinho</h3>
+	<hr>
+	<div class="container-fluid pb-4 pt-4" style="background: #f5f5f0;">
+		<table class="table-responsive-sm">
+		<div class="container">
+			<thead>
+				<tr>
+					<th class="pr-4">
+						<label for="descProd">Código/Descrição do Produto:</label>
+						
+					</th>
+				
+				
+					<th class="pr-4">
+						<label for="descProd">Valor Unitário:</label>
+					
+					</th>
+				
+				
+					<th class="pr-4">
+						<label for="descProd">Quantidade:</label>
+						
+					</th>
+				
+			
+					<th class="pl-5">
+						<label>Adicionar Produto:</label>
+						
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr>
+					<td class="pr-4">
+						<input type="text" class="form-control">		
+					</td>
+					<td class="pr-4">
+						<input type="text" class="form-control">		
+					</td>
+					<td class="pr-4">
+						<input type="text" class="form-control">		
+					</td>
+					<td class="pl-5">
+						<button class="btn btn-info form-control">Adicionar</button>
+					</td>	
+
+				</tr>
+
+			</tbody>
+		</div>
+	</table>
+	<div class="mt-3">
+		
+	<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">#</th>
+      <th scope="col">Código do Produto</th>
+      <th scope="col">Descrição do Produto</th>
+      <th scope="col">Validade</th>
+      <th scope="col">Valor Unitário</th>
+      <th scope="col">Quantidade</th>
+      <th scope="col">Valor total</th>
+      <th scope="col">Ações</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th scope="row">1</th>
+      <td>20191923817</td>
+      <td>GALÃO DE AGUA,ÁGUA CRISTAL,MINAS BOAS</td>
+      <td>02/2019</td>
+      <td>R$ 20,00</td>
+      <td>2</td>
+      <td>R$ 40,00</td>
+      <td><button class="btn btn-danger">Excluir</button></td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>20191923817</td>
+      <td>GALÃO DE AGUA,ÁGUA CRISTAL,MINAS BOAS</td>
+      <td>02/2019</td>
+      <td>R$ 20,00</td>
+      <td>2</td>
+      <td>R$ 40,00</td>
+      <td><button class="btn btn-danger">Excluir</button></td>
+    </tr>
+    <tr>
+      <th scope="row">1</th>
+      <td>20191923817</td>
+      <td>GALÃO DE AGUA,ÁGUA CRISTAL,MINAS BOAS</td>
+      <td>02/2019</td>
+      <td>R$ 20,00</td>
+      <td>2</td>
+      <td>R$ 40,00</td>
+      <td><button class="btn btn-danger">Excluir</button></td>
+    </tr>
+    
+  </tbody>
+</table>
+	</div>
+</div>
+</div>
+</div>
+</form>
+<div id="botoes" class="mt-5">
+	<div class="row">
+		<div class="col-sm">
+			<button type="reset" class="btn btn-danger col-sm pt-3 pb-3">CANCELAR</button>
+		</div>
+		<div class="col-sm">
+			<button type="submit" class="btn btn-success col-sm pt-3 pb-3" id="cadastrar">CADASTRAR</button>
+		</div>
+	</div>
+</div>	
+</form>
+<br />
+<br />

@@ -32,6 +32,18 @@ class Route  extends Bootstrap {
 			'controller' => 'MenuController',
 			'action' => 'cadastrar'
 		);
+
+		$routes['autenticar'] = array (
+			'route' => '/autenticar',
+			'controller' => 'AuthController',
+			'action' => 'autenticar'
+		);
+		$routes['sair'] = array (
+			'route' => '/sair',
+			'controller' => 'AuthController',
+			'action' => 'sair'
+		);
+		
 		
 		$this->setRoutes($routes);
 	}

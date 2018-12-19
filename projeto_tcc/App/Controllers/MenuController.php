@@ -7,22 +7,41 @@ use MF\Model\Container;
 
 class MenuController extends Action {
     private $cliente;
+    private $pedido ;
 
     public function menu() {
-        $this->render('menu','layout2');
+        if($this->validaAutenticacao()) {
+            $this->render('menu','layout2');    
+        }else {
+            header('location: /?login=erro');
+        }
+        
     }
 
     public function cliente() {
-    	$contato = Container::getModel('contato');
-    	$this->view->tipoContatos = $contato->getAllTipoContato();
-        $endereco = Container::getModel('endereco');
-        $this->view->ufs = $endereco->getAllUf();
-        $this->view->cidades = $endereco->getAllCidade();
-        $this->view->bairros = $endereco->getAllBairro();
-    	$this->render('cadastroCliente','layout2');
+        if($this->validaAutenticacao()) {
+            $contato = Container::getModel('contato');
+            $this->view->tipoContatos = $contato->getAllTipoContato();
+            $endereco = Container::getModel('endereco');
+            $this->view->ufs = $endereco->getAllUf();
+            $this->view->cidades = $endereco->getAllCidade();
+            $this->view->bairros = $endereco->getAllBairro();
+            $this->render('cadastroCliente','layout2');    
+        }else {
+            header('location: /?login=erro');
+        }
+    	
     }
 
     public function pedido() {
+        $this->pedido = Container::getModel('pedido');
+        session_start();
+        
+        $this->view->vendedor = $_SESSION['nome'];
+
+        $this->view->cliente = $this->cliente->getClientePorId();
+        $this->pedido->getCod();
+        $this->view->pedido = $this->pedido->__get('id_pedido');
     	$this->render('cadastroPedido','layout2');
     }
 
@@ -42,6 +61,7 @@ class MenuController extends Action {
         }else {
             $id_cliente = $this->cliente->salvarRetorno();
             $this->cliente->__set('id_cliente',$id_cliente['cd_cliente']);
+            
         }
     }
 
@@ -103,10 +123,20 @@ class MenuController extends Action {
             $this->cadastrarCliente();
             $this->cadastrarTipo();
             $this->cadastrarContato();			
-    		$this->cadastrarEndereco();	
-    		header('location: /menu/cliente?cad=ok');
+    		$this->cadastrarEndereco();
+            
+            $this->pedido();
     		
     	}
+    }
+
+    public function validaAutenticacao() {
+        session_start();
+        if(!isset($_SESSION['id']) || $_SESSION['id'] == '' || !isset($_SESSION['nome']) || $_SESSION['nome'] == '') {
+            return false;
+        }else {
+            return true;
+        }
     }
 
 }
