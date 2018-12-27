@@ -1,18 +1,31 @@
 <?php 
-	if(isset($_GET['erro'])) {
-	if($_GET['erro'] == 'nome') {?>
-<div class="alert alert-danger" role="alert">
-  Erro no cadastro, verifique todos os campos preenchidos!
+	if(isset($_GET['erro']) && $_GET['erro'] == 'nome'){
+?>
+<div class="alert alert-danger text-center" role="alert">
+  Atenção, o NOME OU RAZÃO SOCIAL não podem ser NULOS ou INFERIORES A 3 CARACTERES!
 </div>
-<?php }	} ?>
-<?php 
-	if(isset($_GET['cad'])) {
-	if($_GET['cad'] == 'ok') {?>
-<div class="alert alert-success" role="alert">
-  Cadastro efetuado com sucesso!
+<?php
+	}
+	if(isset($_GET['erro']) && $_GET['erro'] == 'ddd1'){
+?>
+<div class="alert alert-danger text-center" role="alert">
+  <span class="text-danger">Atenção, os dados informados como CPF ou RG já foram cadastrados!</span>
 </div>
-<?php }	} ?>
-
+<?php }
+if(isset($_GET['erro']) && $_GET['erro'] == 'ddd2'){
+?>
+<div class="alert alert-danger text-center" role="alert">
+  <span class="text-danger">Atenção, os dados informados como CNPJ ou INSCRIÇÃO ESTADUAL já foram cadastrados!</span>
+</div>
+<?php }
+if(isset($_GET['cad']) && $_GET['cad'] == 'ok'){
+?>
+<div class="alert alert-success text-center" role="alert">
+  <span class="text-success">Cadastrado com sucesso!</span>
+  <button class="btn btn-success">Clique aqui para fazer um pedido!</button>
+</div>
+<?php }
+?> 
 <form method="post" action="/menu/cadastrar?acao=cliente" id=	"form-cad">
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">Cadastro de Cliente</h1>

@@ -9,7 +9,16 @@ class Contato extends Model {
 	private $id_cliente;
 
 	public function __set($att,$valor) {
+		if($att == 'telefone') {
+			$valor = str_replace("(", "", $valor);
+            $valor = str_replace(")", "", $valor);
+            $valor = str_replace(" ", "", $valor);
+            $valor = str_replace("-", "", $valor);
+            $valor = trim($valor);
+		}
+		
 		$this->$att = $valor;
+
 
 	}
 

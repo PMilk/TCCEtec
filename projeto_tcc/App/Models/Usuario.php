@@ -22,15 +22,21 @@ class Usuario extends Model {
         $stmt = $this->db->prepare($query);
         $stmt->bindValue(':acesso',$this->__get('acesso'));
         $stmt->bindValue(':senha',$this->__get('senha'));
-        $stmt->execute();
-
-        $usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
-        if($usuario['cd_usuario'] != '' && $usuario['ic_nivel'] != '' && $usuario['nm_usuario'] !='') {
-            $this->__set('id',$usuario['cd_usuario']);
-            $this->__set('nivel',$usuario['ic_nivel']);
-            $this->__set('nome',$usuario['nm_usuario']);
+        try {
+            $stmt->execute();    
+            $usuario = $stmt->fetch(\PDO::FETCH_ASSOC);
+            if($usuario['cd_usuario'] != '' && $usuario['ic_nivel'] != '' && $usuario['nm_usuario'] !='') {
+                $this->__set('id',$usuario['cd_usuario']);
+                $this->__set('nivel',$usuario['ic_nivel']);
+                $this->__set('nome',$usuario['nm_usuario']);
+            }
+            return $this;
+        } catch (\PDOException $e) {
+            echo 'ERRO:'.$e->getMessage();
         }
-        return $this;
+        
+
+        
     }
 
 }

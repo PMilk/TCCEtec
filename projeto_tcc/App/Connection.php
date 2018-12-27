@@ -13,7 +13,7 @@ class Connection {
 			);
 			return $conn;
 		} catch (\PDOException $e) {
-			
+			echo 'ERRO:'.$e->getMessage();
 		}
 	}
 }

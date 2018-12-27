@@ -3,9 +3,9 @@
 	<h1 class="h2">Seleção de Cliente</h1>
 </div>
 <label>Pesquisa:</label>
-<form action="/menu/pesquisar" method="get">
+<form action="/menu/pesquisar" method="get" id="form-pesq">
 <div class="input-group mb-3">
-	<input type="text" class="form-control col-sm-12" name="pesq">
+	<input type="text" class="form-control col-sm-12" name="pesq" minlength="3" id="pesq">
   	<div class="input-group-append">
     	<select class="custom-select " id="inputGroupSelect02" name="tipo_pesq">
     		<option value="0"selected>NOME</option>
@@ -17,11 +17,24 @@
   		</select>
   	</div>
 </div>
+
+
 <div class="text-center">
 	<button class="btn btn-info pl-5 pr-5">Pesquisar</button>		
 </div>
 </form>
 <hr>
+<?php
+  if($this->view->clientes == ''){
+?>   
+<?php
+        }else if(count($this->view->clientes) == 0) { ?>          
+          <div class="alert alert-danger text-center">
+  <span class="text-danger">Nenhum cliente foi encontrado com esses dados!</span>
+</div>
+<?php 
+  }else {
+?>
 <div class="mt-2">
   <table class="table table-striped table-responsive-sm">
     <thead>
@@ -36,24 +49,51 @@
       </tr>
     </thead>
     <tbody>
+      <form method="post" action="/menu/seleciona"> 
+        
+
+<?php
+        foreach ($this->view->clientes as $key => $cliente) {
+        ?>
       <tr>
-        <td>PAULO LEITE COSTA</td>
-        <td>19/12/2018 12:30:58</td>
-        <td>PESSOA FÍSICA</td>
-        <td>504.084.648-79</td>
-        <td>56.713.233-X</td>
-        <td>(13) 9 9620-5206</td>
-        <td><button class="btn btn-success">Selecionar</button></td>
+        <td><?= $cliente['nome'] ?></td>
+        <td><?= $cliente['data'] ?></td>
+        <td><?php 
+          if($cliente['tipo'] == 1){
+            echo "<span class='text-success'> PESSOA FÍSICA</span>";
+          }else {
+            echo "<span class='text-info'> PESSOA JURÍDICA</span>";
+          }
+        ?></td>
+        <td><?php if($cliente['cod'] == ''){
+          echo "<span class='text-danger'>Não cadastrado</span>";
+        }else {
+          echo $cliente['cod'];
+        } ?></td>
+        <td><?php  if($cliente['cod2'] == '') {
+         echo "<span class='text-danger'>Não cadastrado</span>";
+        }else {
+          echo $cliente['cod2'];
+        } ?></td>
+        <td><?php 
+            if($cliente['telefone'] == ''){
+              echo "<span class='text-danger'>Não cadastrado</span>";
+            }else {
+              echo $cliente['telefone'];
+            } 
+        ?></td>
+        <td><button class="btn btn-success" value="<?= $cliente['cd_cliente'] ?>" name="id_cliente">Selecionar</button></td>
       </tr>
-      <tr>
-        <td>PAULO LEITE COSTA</td>
-        <td>19/12/2018 12:30:58</td>
-        <td>PESSOA FÍSICA</td>
-        <td>504.084.648-79</td>
-        <td>56.713.233-X</td>
-        <td>(13) 9 9620-5206</td>
-        <td><button class="btn btn-success">Selecionar</button></td>
-      </tr>
+      <?php
+        }
+      ?>
+
+      </form>
     </tbody>
   </table>
 </div>
+<?php
+  }
+?>
+
+</script>
