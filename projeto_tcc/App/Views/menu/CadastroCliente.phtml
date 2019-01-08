@@ -18,12 +18,14 @@ if(isset($_GET['erro']) && $_GET['erro'] == 'ddd2'){
   <span class="text-danger">Atenção, os dados informados como CNPJ ou INSCRIÇÃO ESTADUAL já foram cadastrados!</span>
 </div>
 <?php }
-if(isset($_GET['cad']) && $_GET['cad'] == 'ok'){
+if(isset($this->view->cliente) && $this->view->cliente != ''){
 ?>
+<form method="post" action="/menu/seleciona">
 <div class="alert alert-success text-center" role="alert">
   <span class="text-success">Cadastrado com sucesso!</span>
-  <button class="btn btn-success">Clique aqui para fazer um pedido!</button>
+  <button class="btn btn-success" name="id_cliente" value="<?php echo $this->view->cliente; ?>">Clique aqui para fazer um pedido!</button>
 </div>
+</form>
 <?php }
 ?> 
 <form method="post" action="/menu/cadastrar?acao=cliente" id=	"form-cad">
@@ -412,3 +414,4 @@ $("input.telefone")
 		$("#cnpj").mask("99.999.999/9999-99");
 	});
 	</script>
+

@@ -1,0 +1,146 @@
+<div class="container border">
+	<div class="row">
+		<div class="col-sm-12 pt-2">
+			<h1 class="text-center">ETA ÁGUA BOA</h1>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-4 border">
+			<label class="col-form-label-lg">Código do Pedido:</label>
+			<h4 class="text-center text-danger"><?= $this->view->pedido->__get('id_pedido')?></h4>
+		</div>
+		<div class="col-sm-4 border">
+			<label class="col-form-label-lg">Data de emissão:</label>
+			<h4 class="text-center text-info"><?php
+			$data = new DateTime($this->view->pedido->__get('data'));
+			echo $data->format('d/m/Y');	
+			?></h4>
+		</div>
+		<div class="col-sm-4 border">
+			<label class="col-form-label-lg">Hora de emissão:</label>
+			<h4 class="text-center text-info"><?= $this->view->pedido->__get('hora')?></h4>
+		</div>
+	</div>	
+	<div class="row pt-1">
+		<div class="col-sm-3 border">
+			<label class="col-form-label-lg">Nome | Razão Social:</label>
+			<h4 class="text-center text-info"><?php 
+			$encoding = 'UTF-8'; // ou ISO-8859-1...
+			echo mb_convert_case($this->view->cliente->__get('nome'), MB_CASE_UPPER, $encoding);
+			?></h4>
+		</div>
+		<div class="col-sm-3 border">
+			<label class="col-form-label-lg">Telefone:</label>
+			<h4 class="text-center text-info"><?= $this->view->cliente->__get('telefone')?></h4>
+		</div>
+		<div class="col-sm-3 border">
+			<label class="col-form-label-lg">CPF | CNPJ:</label>
+			<h4 class="text-center text-info"><?php
+				if($this->view->cliente->__get('tipo_pessoa') == 1){
+					echo $this->view->cliente->__get('cpf');
+				}else {
+					echo $this->view->cliente->__get('cnpj');
+				}
+			?></h4>
+		</div>
+		<div class="col-sm-3 border">
+			<label class="col-form-label-lg">RG | INSC. ESTADUAL:</label>
+			<h4 class="text-center text-info"><?php
+				if($this->view->cliente->__get('tipo_pessoa') == 1){
+					echo $this->view->cliente->__get('rg');
+				}else {
+					echo $this->view->cliente->__get('insc_estadual');
+				}
+			?></h4>
+		</div>
+	</div>
+
+	<div class="row pt-1">
+		<div class="col-sm-2 border">
+			<label class="col-form-label-lg">Município:</label>
+			<h4 class="text-center text-info"><?= $this->view->endereco->__get('cidade')?></h4>
+		</div>
+		<div class="col-sm-1 border">
+			<label class="col-form-label-lg">UF:</label>
+			<h4 class="text-center text-info"><?= $this->view->endereco->__get('uf')?></h4>
+		</div>
+		<div class="col-sm-4 border">
+			<label class="col-form-label-lg">Endereço:</label>
+			<h4 class="text-center text-info"><?= $this->view->endereco->__get('logradouro')?></h4>
+		</div>
+		<div class="col-sm-2 border">
+			<label class="col-form-label-lg">Número:</label>
+			<h4 class="text-center text-info"><?= $this->view->endereco->__get('numero')?></h4>
+		</div>
+		<div class="col-sm-3 border">
+			<label class="col-form-label-lg">Complemento:</label>
+			<h4 class="text-center text-info"><?= $this->view->endereco->__get('complemento')?></h4>
+		</div>
+	</div>
+
+	<div class="row pt-1">
+			<table class="table">
+			  <thead>
+			    <tr class="text-center">
+			      <th scope="col">#</th>
+			      <th scope="col">Descrição</th>
+			      <th scope="col">Valor Unitário</th>
+			      <th scope="col">Quantidade</th>			   
+			      <th scope="col">Total</th>
+			    </tr>
+			  </thead>
+			  <tbody>
+			  	<?php
+			  	$total = 0;
+			  		foreach ($this->view->itens as $key => $produto) { ?>
+			  		<tr class="text-center"> 
+			      		<th scope="row"><?=($key+1)?></th>
+			      		<td><?= $produto['ds_produto']?></td>
+			      		<td>R$ <?= $produto['valor']?></td>
+			      		<td><?= $produto['qt_produto']?></td>
+			      		<td>R$ <?= number_format(($produto['valor']*$produto['qt_produto']), 2, ',', ' ')?></td>
+			    	</tr>
+			  	<?php
+			  		$total += ($produto['valor']*$produto['qt_produto']);
+			  		}
+			  	?>
+			  	<tr>
+			  		<td></td>
+			  		<td colspan="3"><h4>SubTotal:</h4></td>
+			  		<td ><h5>R$ <?= number_format($total, 2, ',', ' ')?></h5></td>
+			  	</tr>
+			  </tbody>
+			</table>
+
+
+	</div>
+
+</div>
+
+
+
+
+
+
+<!-- <div class="col-sm-1 border">
+			<label class="col-form-label-lg">UF:</label>
+			<h4 class="text-center text-info">SP</h4>
+		</div>
+		<div class="col-sm-3 border">
+			<label class="col-form-label-lg">Cidade:</label>
+			<h4 class="text-center text-info">PRAIA GRANDE</h4>
+		</div>
+		<div class="col-sm-3 border">
+			<label class="col-form-label-lg">Endereço:</label>
+			<h4 class="text-center text-info">Rua Apinages</h4>
+		</div>
+		<div class="col-sm-1 border">
+			<label class="col-form-label-lg">Número:</label>
+			<h4 class="text-center text-info">54</h4>
+		</div>
+		<div class="col-sm-1 border">
+			<label class="col-form-label-lg">Complemento:</label>
+			<h4 class="text-center text-info">Casa</h4>
+		</div>
+ -->

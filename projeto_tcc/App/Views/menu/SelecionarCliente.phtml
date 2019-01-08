@@ -2,30 +2,42 @@
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
 	<h1 class="h2">Seleção de Cliente</h1>
 </div>
-<label>Pesquisa:</label>
+<label>Pesquisa por:</label>
 <form action="/menu/pesquisar" method="get" id="form-pesq">
 <div class="input-group mb-3">
-	<input type="text" class="form-control col-sm-12" name="pesq" minlength="3" id="pesq">
-  	<div class="input-group-append">
-    	<select class="custom-select " id="inputGroupSelect02" name="tipo_pesq">
-    		<option value="0"selected>NOME</option>
-    		<option value="1">TELEFONE</option>
-    		<option value="2">CPF</option>
-    		<option value="3">RG</option>
+	<div class="input-group-append">
+      <select class="custom-select " id="tipo_pesquisa" name="tipo_pesq">
+        <option value="0"selected>NOME</option>
+        <option value="1">TELEFONE</option>
+        <option value="2">CPF</option>
+        <option value="3">RG</option>
         <option value="4">CNPJ</option>
         <option value="5">INSC. ESTADUAL</option>
-  		</select>
-  	</div>
+      </select>
+    </div>
+  <input type="text" class="form-control col-sm-12 " name="pesq" minlength="3" id="pesq">
+  	
 </div>
 
 
 <div class="text-center">
-	<button class="btn btn-info pl-5 pr-5">Pesquisar</button>		
+	<button class="btn btn-info pl-5 pr-5" id="pesquisar" >Pesquisar</button>		
 </div>
 </form>
 <hr>
+<script type="text/javascript">
+  $('#pesquisar').on('click', function() {
+    var qtd = $('#pesq').val().length;
+    if(qtd >=3){
+      return true;
+    }else {
+      return false;
+    }
+  });
+
+</script>
 <?php
-  if($this->view->clientes == ''){
+  if($this->view->clientes == '' || $this->view->clientes == 'vaziu'){
 ?>   
 <?php
         }else if(count($this->view->clientes) == 0) { ?>          
@@ -56,7 +68,9 @@
         foreach ($this->view->clientes as $key => $cliente) {
         ?>
       <tr>
-        <td><?= $cliente['nome'] ?></td>
+        <td><?php
+        $encoding = 'UTF-8'; // ou ISO-8859-1...
+      echo mb_convert_case($cliente['nome'], MB_CASE_UPPER, $encoding); ?></td>
         <td><?= $cliente['data'] ?></td>
         <td><?php 
           if($cliente['tipo'] == 1){
@@ -96,4 +110,31 @@
   }
 ?>
 
+<script type="text/javascript">
+  $('#tipo_pesquisa').change(function(){
+    var tipo = $('#tipo_pesquisa').val();
+    if(tipo == '1'){
+       $('#pesq').addClass('telefone');
+    }
+  })
+
+</script>
+
+<script type="text/javascript">
+
+$("input.telefone")
+        .mask("(99) 9999-99999")
+        .focusout(function (event) {
+            var target, phone, element;
+            target = (event.currentTarget) ? event.currentTarget : event.srcElement;
+            phone = target.value.replace(/\D/g, ''); //Remove tudo o que não é dígito
+            element = $(target);
+            element.unmask();
+            if(phone.length > 10) {
+                element.mask("(99) 9 9999-9999");
+            } else if(phone.length == 10 ) {
+                element.mask("(99) 9999-99999");
+            }else {
+            }
+        });
 </script>

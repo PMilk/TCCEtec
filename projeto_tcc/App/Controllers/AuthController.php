@@ -9,7 +9,7 @@
 			$usuario = Container::getModel('usuario');
 
 			$usuario->__set('acesso',$_POST['acesso']);
-			$usuario->__set('senha',$_POST['senha']);
+			$usuario->__set('senha',md5($_POST['senha']));
 			$usuario->autenticar();
 			if($usuario->__get('id') != '' && $usuario->__get('acesso') != '') {
 				session_start();

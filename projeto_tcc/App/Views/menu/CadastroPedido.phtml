@@ -1,19 +1,27 @@
 
+<?php
+	if((isset($_GET['erro'])) && $_GET['erro'] == 'cv') {
+?>
+	<div class="alert alert-danger text-center" role="alert">
+  <span class="font-weight-bold">O carrinho de produtos NÃO pode estar vaziu!</span>
+</div>
+<?php
+	}
+?>
 
 <?php 
-	if(isset($_GET['erro'])) {
-	if($_GET['erro'] == 'nome') {?>
-<div class="alert alert-danger" role="alert">
-  Erro no cadastro, verifique todos os campos preenchidos!
+	if((isset($_GET['cad'])) && $_GET['cad'] == 'ok') {
+?>
+<form method="post" action="/menu/emitir?tipo=entregador" target="_blank">
+<div class="alert alert-success text-center" role="alert">
+  <span class="text-success">Cadastrado com sucesso!</span>
+  <button class="btn btn-success" name="id_cliente" value="<?= $_SESSION['pedido']['id_pedido'] ?>">Clique aqui para emitir notas!</button>
 </div>
-<?php }	} ?>
+</form>
 <?php 
-	if(isset($_GET['cad'])) {
-	if($_GET['cad'] == 'ok') {?>
-<div class="alert alert-success" role="alert">
-  Cadastro efetuado com sucesso!
-</div>
-<?php }	} ?>
+}
+?>
+
 
 <form method="post" action="/menu/cadastrar?acao=pedido" id="form-cad">
 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
@@ -83,9 +91,17 @@
 
 
 </div>
+<?php
+	if(count($this->view->itens) != 0){
+?>
 <hr>
 <div id="pedidos" class="mx-auto" style="max-width: 600px;">
-	<h3 class="text-center">Itens do último pedido:</h3>
+	<h3 class="text-center">Itens do último pedido: <?php 
+	$data = new DateTime($this->view->itens[0]['dt_pedido']);
+	$hora = $this->view->itens[0]['hr_pedido'];
+	echo $data->format('d/m/Y').' às '.$hora;
+
+	?></h3>
 	<hr>
 	<table class="table table-striped table-responsive-sm">
   <thead>
@@ -96,24 +112,25 @@
     </tr>
   </thead>
   <tbody>
+  	<?php
+  		foreach ($this->view->itens as $key => $item) {
+  		$key ++;
+  	?>
     <tr>
-      <th scope="row">1</th>
-      <td>GALÃO DE ÁGUA CRISTAL,20L</td>
-      <td>02/2018</td>
+      <th scope="row"><?= $key ?></th>
+      <td><?= $item['ds_produto'] ?></td>
+      <td><?= $item['dt_validade'] ?></td>
     </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>GALÃO DE ÁGUA CRISTAL,20L</td>
-      <td>02/2018</td>
-    </tr><tr>
-      <th scope="row">1</th>
-      <td>GALÃO DE ÁGUA CRISTAL,20L</td>
-      <td>02/2018</td>
-    </tr>
-    
+
+    <?php
+    	}
+    ?>
   </tbody>
 </table>
 </div>
+<?php
+	}
+?>
 <hr>
 <div>
 <h3 class="text-center">Dados do Pedido:</h3>
@@ -122,7 +139,7 @@
 	<div class="col-sm-6">
 		<label>Endereço de entrega:</label>
 		<div class="input-group">
-  <select class="custom-select" id="inputGroupSelect04" aria-label="Example select with button addon">
+  <select class="custom-select" name="id_entrega">
     <option value="-10">Retirado no local</option>
     <?php
     	foreach ($this->view->enderecos as $key => $endereco) {
@@ -177,8 +194,8 @@
 			<tbody>
 				<tr>
 					<td class="pr-4">
-						<select class="form-control" id="produto">
-							<option selected="">Escolha um produto</option>
+						<select class="form-control selectBusca" id="produto">
+							<option  value="-10" id="escolha">Escolha um produto</option>
 						<?php
 							foreach ($this->view->produtos as $key => $produto) {					
 						?>
@@ -187,17 +204,20 @@
 							}
 						?>	
 						</select>
-						
+<script type="text/javascript">
+	$('.selectBusca').select2({
+});
+</script>						
 
 					</td>
 					<td class="pr-4">
-						<input type="text" class="form-control">		
+						<input type="text" class="form-control" id="preco" disabled>		
 					</td>
 					<td class="pr-4">
-						<input type="text" class="form-control">		
+						<input type="number" class="form-control" id="quantidade">		
 					</td>
 					<td class="pl-5">
-						<button class="btn btn-info form-control">Adicionar</button>
+						<button class="btn btn-info form-control" type="button" id="adicionar">Adicionar</button>
 					</td>	
 
 				</tr>
@@ -220,37 +240,7 @@
       <th scope="col">Ações</th>
     </tr>
   </thead>
-  <tbody>
-    <tr>
-      <th scope="row">1</th>
-      <td>20191923817</td>
-      <td>GALÃO DE AGUA,ÁGUA CRISTAL,MINAS BOAS</td>
-      <td>02/2019</td>
-      <td>R$ 20,00</td>
-      <td>2</td>
-      <td>R$ 40,00</td>
-      <td><button class="btn btn-danger">Excluir</button></td>
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>20191923817</td>
-      <td>GALÃO DE AGUA,ÁGUA CRISTAL,MINAS BOAS</td>
-      <td>02/2019</td>
-      <td>R$ 20,00</td>
-      <td>2</td>
-      <td>R$ 40,00</td>
-      <td><button class="btn btn-danger">Excluir</button></td>
-    </tr>
-    <tr>
-      <th scope="row">1</th>
-      <td>20191923817</td>
-      <td>GALÃO DE AGUA,ÁGUA CRISTAL,MINAS BOAS</td>
-      <td>02/2019</td>
-      <td>R$ 20,00</td>
-      <td>2</td>
-      <td>R$ 40,00</td>
-      <td><button class="btn btn-danger">Excluir</button></td>
-    </tr>
+  <tbody id="carrinhos">
     
   </tbody>
 </table>
@@ -258,11 +248,11 @@
 </div>
 </div>
 </div>
-</form>
+
 <div id="botoes" class="mt-5">
 	<div class="row">
 		<div class="col-sm">
-			<button type="reset" class="btn btn-danger col-sm pt-3 pb-3">CANCELAR</button>
+			<button type="button" id="cancelar" class="btn btn-danger col-sm pt-3 pb-3">CANCELAR</button>
 		</div>
 		<div class="col-sm">
 			<button type="submit" class="btn btn-success col-sm pt-3 pb-3" id="cadastrar">CADASTRAR</button>
@@ -274,28 +264,92 @@
 <br />
 <br />
 
-
 <script type="text/javascript">
+	$(document).ready(function() {
+		$("#preco").maskMoney({prefix:'R$ ', allowNegative: true, thousands:'.', decimal:',', affixesStay: false});
+		renderCarrinho();
+	});
 	$('#produto').change(function() {
-		// var id_produto = $('#produto').val()
-		// var tipo_cliente = <?= $_SESSION['cliente']['tipo_cliente'] ?>;
-		alert('ok');
-	$.ajax({
-    	url: "/menu/pedido/produto",
-    	type: "POST",
-    	data: "",
-    	dataType: "html"
+		var id_produt = $('#produto').val();
+		if(id_produt > 0){
+			$('#preco').val('');
+			$('#quantidade').val('');
+		}
+		$.ajax({
+			url: '/menu/pedido/produtos',
+			method: 'POST',
+			datatype: 'html',
+			data: {id_produto: id_produt}, 
+			success: function(data) {
+				$('#preco').empty().val('R$ '+data).focus();
+				$('#quantidade').empty().focus();
 
-		}).done(function(resposta) {
-    		console.log(resposta);
+			}
 
-		}).fail(function(jqXHR, textStatus ) {
-    		console.log("Request failed: " + textStatus);
-
-		}).always(function() {
-    		console.log("completou");
-	});	
-
+		});
 	});
 
+
 </script>
+
+<script type="text/javascript">
+	$('#adicionar').on('click',function() {
+		var id_produt = $('#produto').val();
+		var quantidade = $('#quantidade').val();
+		if(quantidade <= 0){
+			alert('Quantidade de produtos inválida!');
+		}else{
+			$.ajax({
+				url: '/menu/pedido/addCarrinho',
+				method: 'POST',
+				datatype: 'html',
+				data: {action: 'add', id_produto: id_produt, qtd: quantidade},
+				success: function() {
+					$('#quantidade').val('');
+					renderCarrinho();
+					$('#produto').focus();
+				}
+			});	
+		}
+		
+	})
+
+</script>
+<script type="text/javascript">
+	function renderCarrinho(){
+		$.ajax({
+				url: '/menu/pedido/addCarrinho',
+				method: 'POST',
+				datatype: 'html',
+				data: {action: 'render'},
+				success: function(data) {
+					$('#carrinhos').empty().append(data);
+				}
+			});	
+	}
+</script>
+
+<script type="text/javascript">
+	
+	function excluir(id) {
+		if(confirm('Deseja mesmo remover esse produto?')){
+			$.ajax({
+				url: '/menu/pedido/addCarrinho',
+				method: 'POST',
+				datatype: 'html',
+				data: {action: 'excluir',id_produto: id},
+				success: function() {
+					renderCarrinho();	
+				}
+			});		
+		}
+		
+	}
+
+</script>
+
+	<script type="text/javascript">
+		$('#cancelar').on('click', function() {
+			$(location).attr('href', '/menu/selecionar');
+		})
+	</script>

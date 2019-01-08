@@ -13,8 +13,9 @@ class IndexController extends Action {
     		$this->view->login = isset($_GET['login']) ? $_GET['login'] : ''; 
         	$this->render('index');	
     	}
-        
-
+    }
+    public function naoEncontrado() {
+        $this->render('notFount','layout'); 
     }
     
     public function validaAutenticacao() {

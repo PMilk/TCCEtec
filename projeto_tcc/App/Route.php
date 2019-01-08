@@ -7,7 +7,7 @@ use MF\Init\Bootstrap;
 class Route  extends Bootstrap {
 
 	protected function initRoutes() {
-		$routes['home'] = array (
+		$routes[''] = array (
 			'route' => '/',
 			'controller' => 'indexController',
 			'action' => 'index'
@@ -65,6 +65,23 @@ class Route  extends Bootstrap {
 			'controller' => 'MenuController',
 			'action' => 'pagamento'
 		);
+		$routes['pesqusiarProdutos'] = array (
+			'route' => '/menu/pedido/produtos',
+			'controller' => 'MenuController',
+			'action' => 'pesquisaProdutos'
+		);
+		$routes['adicionarCarrinho'] = array (
+			'route' => '/menu/pedido/addCarrinho',
+			'controller' => 'MenuController',
+			'action' => 'adicionarCarrinho'
+		);
+		$routes['notaEntregador'] = array (
+			'route' => '/menu/emitir',
+			'controller' => 'MenuController',
+			'action' => 'notaEntregador'
+		);
+
+		
 		
 		$this->setRoutes($routes);
 	}
