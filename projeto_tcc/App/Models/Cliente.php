@@ -249,10 +249,11 @@ class Cliente extends Model {
 		$stmt = $this->db->prepare($query);
 		$stmt->bindValue(':id_cliente',$this->__get('id_cliente'));
 		$stmt->execute();
-		if(count($stmt->fetchAll(\PDO::FETCH_ASSOC)) == 0){
+		$valor = $stmt->fetchAll(\PDO::FETCH_ASSOC);
+		if(count($valor) == 0){
 			$this->__set('telefone','');
-		}else {
-			$telefone = $stmt->fetchAll(\PDO::FETCH_ASSOC)[0];
+		}else {	
+			$telefone = $valor[0];
 			$this->__set('telefone',$telefone['cd_telefone']);	
 		}
 		return $this;
