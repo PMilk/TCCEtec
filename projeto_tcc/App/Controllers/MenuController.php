@@ -10,59 +10,50 @@ class MenuController extends Action {
     //realiza a renderização do menu
     public function menu() {
         //verifica se está autenticado
-        if($this->validaAutenticacao()) {
+        $this->validaAutenticacao();
             //remove a sessao de cliente do cadastro de pedido
-            $this->unsetSession();
+        $this->unsetSession();
             //renderiza o menu
-            $this->render('menu','layout2');    
-        }else {
-            //mensagem de erro de login
-            header('location: /?login=erro');
-        }    
+        $this->render('menu','layout2');        
     }
     //realiza a renderização do cadastro de cliente
     public function cliente() {
         //verifica se está autenticado
-        if($this->validaAutenticacao()) {
-            //remove a sessao de cliente do cadastro de pedido
-            $this->unsetSession();
-            //declara a varivel como objeto da classe
-            $contato = Container::getModel('contato');
-            //recupera do banco de dados todos os tipos de contato
-            $this->view->tipoContatos = $contato->getAllTipoContato();
-            //declara a varivel como objeto da classe
-            $endereco = Container::getModel('endereco');
-            //recupera todos os UFS do banco de dados
-            $this->view->ufs = $endereco->getAllUf();
-            //recupera todas as Cidades do banco de dados
-            $this->view->cidades = $endereco->getAllCidade();
-            //recupera todos os Bairros do banco de dados
-            $this->view->bairros = $endereco->getAllBairro();
-            if(isset($this->view->cliente) && $this->view->cliente != '') {
-                $this->render('cadastroCliente','layout2');    
-            }else {
-                $this->view->cliente = '';
-            }
-            //renderiza o cadastro de cliente
+        $this->validaAutenticacao();
+        //remove a sessao de cliente do cadastro de pedido
+        $this->unsetSession();
+        //declara a varivel como objeto da classe
+        $contato = Container::getModel('contato');
+        //recupera do banco de dados todos os tipos de contato
+        $this->view->tipoContatos = $contato->getAllTipoContato();
+        //declara a varivel como objeto da classe
+        $endereco = Container::getModel('endereco');
+        //recupera todos os UFS do banco de dados
+        $this->view->ufs = $endereco->getAllUf();
+        //recupera todas as Cidades do banco de dados
+        $this->view->cidades = $endereco->getAllCidade();
+        //recupera todos os Bairros do banco de dados
+        $this->view->bairros = $endereco->getAllBairro();    
+        //se a view cliente for diferente de vazia
+        if(isset($this->view->cliente) && $this->view->cliente != '') {
             $this->render('cadastroCliente','layout2');    
         }else {
-            //mensagem de erro de login
-            header('location: /?login=erro');
+            $this->view->cliente = '';
         }
+        //renderiza o cadastro de cliente
+        $this->render('cadastroCliente','layout2');    
     }
 
     private function cadastrarPedido() {
-         if(!$this->validaAutenticacao()){
-            header('location: /?login=erro');
-         }
+         $this->validaAutenticacao();
+          //inicia sessao
+          if(!isset($_SESSION)){
+                session_start();    
+          }
         //se houver um post
         if(isset($_POST)){
-            //inicia sessao
-            if(!isset($_SESSION)){
-                session_start();    
-            }
-            //instancia pedido
-            $pedido =  Container::getModel('pedido');
+        	//instancia pedido
+         	$pedido =  Container::getModel('pedido');
             //seta o id do usuario por meio de uma sessao
             $pedido->__set('id_usuario',$_SESSION['id']);
             //seta a data do pedido
@@ -73,6 +64,7 @@ class MenuController extends Action {
             $pedido->__set('id_cliente',$_SESSION['cliente']['id_cliente']);
             //seta o id do endereço de entrega do cliente
             $pedido->__set('id_entrega', $_POST['id_entrega']);
+           
             if($pedido->__get('id_cliente') == ''){
                 header('location: /menu/pedido');
             }else {
@@ -103,9 +95,7 @@ class MenuController extends Action {
                     $_SESSION['pedido']['id_pedido'] = $pedido->__get('id_pedido');
                     header('location: /menu/pedido?cad=ok');
                 }
-            }
-            
-            
+            }            
         }else {
             header('location: /menu/pedido');
         }
@@ -289,7 +279,7 @@ class MenuController extends Action {
             session_start();
         }
         if(!isset($_SESSION['id']) || $_SESSION['id'] == '' || !isset($_SESSION['nome']) || $_SESSION['nome'] == '') {
-            return false;
+            header('location: /?login=erro');
         }else {
             return true;
         }
